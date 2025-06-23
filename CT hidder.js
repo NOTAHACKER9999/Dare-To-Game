@@ -1,0 +1,1 @@
+javascript:(function() {     document.querySelector("link[rel*='icon']").href = "https://resources.finalsite.net/images/f_auto,q_auto/v1689877141/mooreschoolscom/emadd6nvplrnh1vsswjf/Clever-Logo.jpg";     document.title = "Clever │ Portal"; })();
