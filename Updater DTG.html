@@ -4,330 +4,132 @@
     <title>Dare to Game 2</title>
     <link rel="shortcut icon" type="image/x-icon" href="https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg">
     <style>
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #222;
-            color: white;
-        }
-
-        .main-menu, .youtube-menu, .games-menu, .tools-menu, .tab-hiders-menu, .fake-tabs-menu {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background-color: black;
-            color: white;
-            position: absolute; /* Important fix: Position menus absolutely */
-            top: 0;
-            left: 0;
-            width: 100%; /* Ensure it covers the full width */
-        }
-
-        .glowing-title {
-            font-size: 3em;
-            text-shadow: 0 0 10px #800000, 0 0 20px #800000, 0 0 30px #800000;
-            color: #cc0000;
-            margin-bottom: 20px;
-        }
-
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            background-color: black;
-            color: red;
-            border: 2px solid red;
-            border-radius: 5px;
-            font-size: 1.2em;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        button:hover {
-            background-color: red;
-            color: black;
-        }
-
-        .youtube-menu, .games-menu, .tools-menu, .tab-hiders-menu, .fake-tabs-menu {
-            display: none;
-        }
-
-        .youtube-title, .games-title, .tools-title, .tab-hiders-title, .fake-tabs-title {
-            font-size: 4em;
-            margin-top: -100px;
-            margin-bottom: 50px;
-            text-shadow: 0 0 10px #800000, 0 0 20px #800000, 0 0 30px #800000;
-            color: #cc0000;
-        }
-
-        .youtube-button-container, .games-button-container, .tools-button-container, .tab-hiders-button-container, .fake-tabs-button-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .back-button {
-            margin-top: 20px;
-        }
-
-        .gbar {
-            width: 80%;
-            height: 200px;
-            background-color: #333;
-            overflow-x: auto;
-            white-space: nowrap;
-            padding: 10px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-        }
-
-        .gbar button {
-            margin: 0 10px;
-        }
-
-        /* Desmos Overlay Styles */
-        #desmosOverlay {
-            display: none; /* Hidden by default */
-            position: fixed; /* Cover the whole screen */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1000; /* Ensure it's on top */
-            border: none; /* Remove iframe border */
-        }
-
-        #desmosOverlay iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        /* Close Button Style */
-        #closeOverlay {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 20px;
-            color: rgba(255, 0, 0, 0.3); /* Faint red */
-            cursor: pointer;
-            z-index: 1001; /* Above the iframe */
-            user-select: none; /* Prevent text selection */
-        }
-
-        #closeOverlay:hover {
-            color: rgba(255, 0, 0, 0.7); /* Slightly brighter on hover */
-        }
+        body{font-family:sans-serif;margin:0;padding:0;background-color:#222;color:#fff}
+        .menu{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background-color:#000;color:#fff;position:absolute;top:0;left:0;width:100%;display:none}
+        .menu#mainMenu{display:flex}
+        .glowing-title{font-size:3em;text-shadow:0 0 10px #800,0 0 20px #800,0 0 30px #800;color:#cc0000;margin-bottom:20px}
+        button{padding:10px 20px;margin:10px;background-color:#000;color:red;border:2px solid red;border-radius:5px;font-size:1.2em;cursor:pointer;transition:background-color .3s,color .3s}
+        button:hover{background-color:red;color:#000}
+        .red-panel{background-color:rgba(255,0,0,.2);padding:20px;border-radius:10px;margin-bottom:20px;text-align:center}
+        .red-panel input[type=text]{padding:10px;font-size:1.2em;border:1px solid #800;border-radius:5px;background-color:#000;color:#fff;width:80%;margin-bottom:10px}
+        #youtubeVideoOverlay,#youtubeMusicOverlay,#webpageOverlay,#desmosOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.8);z-index:1002}
+        #youtubeVideoOverlay iframe,#youtubeMusicOverlay iframe,#webpageOverlay iframe,#desmosOverlay iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;height:80%;border:none}
+        #closeYoutubeOverlay,#closeYoutubeMusicOverlay,#closeWebpageOverlay,#closeDesmosOverlay{position:absolute;top:20px;right:20px;font-size:30px;color:#fff;cursor:pointer;z-index:1003;user-select:none}
+        #closeDesmosOverlay{top:auto;bottom:10px;left:auto;right:10px;font-size:20px;color:rgba(255,0,0,.3)}
+        #closeDesmosOverlay:hover{color:rgba(255,0,0,.7)}
+        .gbar{width:80%;height:200px;background-color:#333;overflow-x:auto;white-space:nowrap;padding:10px;margin-bottom:20px;display:flex;align-items:center}
+        .gbar button{margin:0 10px}
+        #desmosOverlay iframe {width: 100%;height: 100%;border: none;}
     </style>
 </head>
 <body>
-
-<div class="main-menu" id="mainMenu">
-    <h1 class="glowing-title">Dare to Game 2</h1>
-    <button onclick="showGamesMenu()">Games</button>
-    <button onclick="showYoutubeMenu()">Youtube</button>
-    <button onclick="showToolsMenu()">Tools</button>
-    <button onclick="goToCustomizer()">Customizer</button>
-</div>
-
-<div class="youtube-menu" id="youtubeMenu">
-    <h2 class="youtube-title">Youtube Area</h2>
-    <div class="youtube-button-container">
-        <button onclick="goToYoutubeVid()">Youtube Vid</button>
-        <button onclick="goToYoutubeMusic()">Youtube Music</button>
+    <div class="menu" id="mainMenu">
+        <h1 class="glowing-title">Dare to Game 2</h1>
+        <button onclick="showMenu('gamesMenu')">Games</button>
+        <button onclick="showMenu('youtubeMenu')">Youtube</button>
+        <button onclick="showMenu('toolsMenu')">Tools</button>
+        <button onclick="showMenu('webpageOpenerMenu')">Web Page Opener</button>
+        <button onclick="alert('Customizer')">Customizer</button>
     </div>
-    <button class="back-button" onclick="showMainMenu()">Back</button>
-</div>
-
-<div class="games-menu" id="gamesMenu">
-    <h2 class="games-title">GAMES</h2>
-    <div class="gbar" id="gbar">
-        <button>Game 1</button>
-        <button>Game 2</button>
-        <button>Game 3</button>
-        <button>Game 4</button>
-        <button>Game 5</button>
-        <button>Game 6</button>
-        <button>Game 7</button>
-        <button>Game 8</button>
-        <button>Game 9</button>
-        <button>Game 10</button>
+    <div class="menu" id="youtubeMenu">
+        <h2 class="glowing-title">Youtube Area</h2>
+        <button onclick="showMenu('youtubeVidMenu')">Youtube Vid</button>
+        <button onclick="showMenu('youtubeMusicMenu')">Youtube Music</button>
+        <button onclick="showMenu('mainMenu')">Back</button>
     </div>
-    <button class="back-button" onclick="showMainMenu()">Back</button>
-</div>
-
-<div class="tools-menu" id="toolsMenu">
-    <h2 class="tools-title">Tools</h2>
-    <div class="tools-button-container">
-        <button onclick="showTabHidersMenu()">Tab Hidders</button>
-        <button onclick="goToCalculator()">Calculator</button>
-        <button onclick="showFakeTabsMenu()">Fake Tabs</button>
+    <div class="menu" id="gamesMenu">
+        <h2 class="glowing-title">GAMES</h2>
+        <div class="gbar"><button>Game 1</button><button>Game 2</button><button>Game 3</button><button>Game 4</button><button>Game 5</button><button>Game 6</button><button>Game 7</button><button>Game 8</button><button>Game 9</button><button>Game 10</button></div>
+        <button onclick="showMenu('mainMenu')">Back</button>
     </div>
-    <button class="back-button" onclick="showMainMenu()">Back</button>
-</div>
-
-<div class="tab-hiders-menu" id="tabHidersMenu">
-    <h2 class="tab-hiders-title">Tab Hiders</h2>
-    <div class="tab-hiders-button-container">
-        <button onclick="setMasteryConnectTab()">Mastery Connect</button>
-        <button onclick="setCleverTab()">Clever</button>
-        <button onclick="setGoogleClassroomTab()">Google Classroom</button>
-        <button onclick="setChromeTab()">Chrome Tab</button>
-        <button onclick="setClassCompanionTab()">Class companion</button>
-        <button onclick="setIXLTab()">IXL</button>
+    <div class="menu" id="toolsMenu">
+        <h2 class="glowing-title">Tools</h2>
+        <button onclick="showMenu('tabHidersMenu')">Tab Hidders</button>
+        <button onclick="alert('Calculator')">Calculator</button>
+        <button onclick="showMenu('fakeTabsMenu')">Fake Tabs</button>
+        <button onclick="showMenu('mainMenu')">Back</button>
+    </div>
+    <div class="menu" id="tabHidersMenu">
+        <h2 class="glowing-title">Tab Hiders</h2>
+        <button onclick="setTab('Mastery Connect','https://play-lh.googleusercontent.com/xzpb2NiAHpKIPsDAH7LT3pSPKUfKnfI5zmfcNuAwUqV_Cp1zgLr9Qr2DIa2H5nPHa467')">Mastery Connect</button>
+        <button onclick="setTab('Clever | Portal','https://resources.finalsite.net/images/f_auto,q_auto/v1689877141/mooreschoolscom/emadd6nvplrnh1vsswjf/Clever-Logo.jpg')">Clever</button>
+        <button onclick="setTab('Home','https://www.gstatic.com/classroom/logo_square_rounded.svg')">Google Classroom</button>
+        <button onclick="setTab('New Tab','https://miro.medium.com/v2/resize:fit:640/format:webp/1*cFJL8VVncsRcUuHCT7n9MA.jpeg')">Chrome Tab</button>
+        <button onclick="setTab('Class Companion','https://classcompanion.us/wp-content/uploads/2022/07/cropped-favicon-32x32.png')">Class companion</button>
+        <button onclick="setTab('IXL | Math, Language Arts, Science, Social Studies, and Spanish','https://www.ixl.com/favicon.ico')">IXL</button>
         <button onclick="resetTab()">Reset Tab</button>
+        <button onclick="showMenu('toolsMenu')">Back</button>
     </div>
-    <button class="back-button" onclick="showToolsMenu()">Back</button>
-</div>
-
-<div class="fake-tabs-menu" id="fakeTabsMenu">
-    <h2 class="fake-tabs-title">Fake Tabs</h2>
-    <div class="fake-tabs-button-container">
-        <button onclick="applyDesmosOverlay()">Desmos Cover</button>
+    <div class="menu" id="fakeTabsMenu">
+        <h2 class="glowing-title">Fake Tabs</h2>
+        <button onclick="showOverlay('desmosOverlay')">Desmos Cover</button>
+        <button onclick="showMenu('toolsMenu')">Back</button>
     </div>
-    <button class="back-button" onclick="showToolsMenu()">Back</button>
-</div>
-
-<div id="desmosOverlay">
-    <iframe src="https://www.desmos.com/scientific"></iframe>
-    <div id="closeOverlay" onclick="removeDesmosOverlay()">&#x2715;</div>
-</div>
-
-<script>
-const defaultTitle = "Dare to Game 2"; // Store the initial title
-const defaultFavicon = "https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg"; // Store the initial favicon
-
-// Function to reset the tab to default
-function resetTab() {
-    document.title = defaultTitle;
-    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = defaultFavicon;
-    document.getElementsByTagName('head')[0].appendChild(link);
-}
-
-// Function to apply Desmos Overlay
-function applyDesmosOverlay() {
-    document.getElementById("desmosOverlay").style.display = "block";
-}
-
-// Function to remove Desmos Overlay
-function removeDesmosOverlay() {
-    document.getElementById("desmosOverlay").style.display = "none";
-}
-
-// Call resetTab() on page load to ensure defaults are applied
-window.onload = resetTab;
-
-// Function to show fake tabs menu
-function showFakeTabsMenu() {
-    document.getElementById("toolsMenu").style.display = "none";
-    document.getElementById("fakeTabsMenu").style.display = "flex";
-}
-
-function showYoutubeMenu() {
-    document.getElementById("mainMenu").style.display = "none";
-    document.getElementById("youtubeMenu").style.display = "flex";
-}
-
-function showMainMenu() {
-    document.getElementById("youtubeMenu").style.display = "none";
-    document.getElementById("gamesMenu").style.display = "none";
-    document.getElementById("toolsMenu").style.display = "none";
-    document.getElementById("tabHidersMenu").style.display = "none";
-    document.getElementById("fakeTabsMenu").style.display = "none";
-    document.getElementById("mainMenu").style.display = "flex";
-}
-
-function showGamesMenu() {
-    document.getElementById("mainMenu").style.display = "none";
-    document.getElementById("gamesMenu").style.display = "flex";
-}
-
-function showToolsMenu() {
-    document.getElementById("mainMenu").style.display = "none";  // Hide main menu
-    document.getElementById("tabHidersMenu").style.display = "none"; // Ensure tabHiders is hidden
-    document.getElementById("fakeTabsMenu").style.display = "none";
-    document.getElementById("toolsMenu").style.display = "flex";  // Show the tools menu
-}
-
-
-function showTabHidersMenu() {
-    document.getElementById("toolsMenu").style.display = "none";
-    document.getElementById("fakeTabsMenu").style.display = "none";
-    document.getElementById("tabHidersMenu").style.display = "flex";
-}
-
-function goToCalculator() {
-    alert("Navigating to Calculator (placeholder)");
-    // Replace with actual navigation logic
-}
-
-function showCustomizer() {
-    alert("Navigating to Customizer (placeholder)");
-    // Replace with actual navigation logic
-}
-
-function goToYoutubeVid() {
-    alert("Navigating to Youtube Vid (placeholder)");
-}
-
-function goToYoutubeMusic() {
-    alert("Navigating to Youtube Music (placeholder)");
-}
-
-function setMasteryConnectTab() {
-    document.title = "Mastery Connect :: Home";
-    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'https://play-lh.googleusercontent.com/xzpb2NiAHpKIPsDAH7LT3pSPKUfKnfI5zmfcNuAwUqV_Cp1zgLr9Qr2DIa2H5nPHa467';
-}
-
-function setCleverTab() {
-    document.title = "Clever | Portal";
-    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'https://resources.finalsite.net/images/f_auto,q_auto/v1689877141/mooreschoolscom/emadd6nvplrnh1vsswjf/Clever-Logo.jpg';
-}
-
-function setGoogleClassroomTab() {
-    document.title = "Home"; // Or whatever the actual Google Classroom title is
-    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'https://www.gstatic.com/classroom/logo_square_rounded.svg';
-}
-
-function setChromeTab() {
-    document.title = "New Tab";
-    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'https://miro.medium.com/v2/resize:fit:640/format:webp/1*cFJL8VVncsRcUuHCT7n9MA.jpeg';
-}
-
-function setClassCompanionTab() {
-    document.title = "Class Companion"; // Or the actual title
-    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'https://classcompanion.us/wp-content/uploads/2022/07/cropped-favicon-32x32.png'; // Replace with actual favicon URL
-}
-
-function setIXLTab() {
-    document.title = "IXL | Math, Language Arts, Science, Social Studies, and Spanish";
-    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
-    link.type = 'image/x-icon';
-    link.rel = 'shortcut icon';
-    link.href = 'https://www.ixl.com/favicon.ico';
-}
-</script>
-
+     <div class="menu" id="youtubeVidMenu">
+        <h2 class="glowing-title">Youtube Video Player</h2>
+        <div class="red-panel">
+            <input type="text" id="youtubeLink" placeholder="Enter YouTube Video Link">
+            <button onclick="playMedia('youtubeLink','youtubeFrame','youtubeVideoOverlay',true)">Play Video</button>
+        </div>
+        <button onclick="showMenu('youtubeMenu')">Back</button>
+    </div>
+    <div class="menu" id="youtubeMusicMenu">
+        <h2 class="glowing-title">Youtube Music Player</h2>
+        <div class="red-panel">
+            <input type="text" id="youtubeMusicLink" placeholder="Enter YouTube Music Link">
+            <button onclick="playMedia('youtubeMusicLink','youtubeMusicFrame','youtubeMusicOverlay',true)">Play Music</button>
+        </div>
+        <button onclick="showMenu('youtubeMenu')">Back</button>
+    </div>
+    <div class="menu" id="webpageOpenerMenu">
+        <h2 class="glowing-title">Web Page Opener</h2>
+        <div class="red-panel">
+            <input type="text" id="webpageLink" placeholder="Enter Web Page Link">
+            <button onclick="playMedia('webpageLink','webpageFrame','webpageOverlay',false)">Open Webpage</button>
+        </div>
+        <button onclick="showMenu('mainMenu')">Back</button>
+    </div>
+    <div id="desmosOverlay">
+      <iframe src="https://www.desmos.com/scientific"></iframe>
+      <div id="closeDesmosOverlay" onclick="showOverlay('desmosOverlay',false)">&#x2715;</div>
+    </div>
+    <div id="youtubeVideoOverlay">
+      <span id="closeYoutubeOverlay" onclick="closeMedia('youtubeFrame','youtubeVideoOverlay','youtubeLink')">&#x2715;</span>
+      <iframe id="youtubeFrame" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div id="youtubeMusicOverlay">
+      <span id="closeYoutubeMusicOverlay" onclick="closeMedia('youtubeMusicFrame','youtubeMusicOverlay','youtubeMusicLink')">&#x2715;</span>
+      <iframe id="youtubeMusicFrame" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div id="webpageOverlay">
+      <span id="closeWebpageOverlay" onclick="closeMedia('webpageFrame','webpageOverlay','webpageLink')">&#x2715;</span>
+      <iframe id="webpageFrame" frameborder="0"></iframe>
+    </div>
+    <script>
+        const D="Dare to Game 2",F="https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg";
+        function resetTab(){document.title=D;let l=document.querySelector("link[rel*='icon']")||document.createElement('link');l.type='image/x-icon';l.rel='shortcut icon';l.href=F;document.getElementsByTagName('head')[0].appendChild(l)}
+        function showOverlay(i,s){document.getElementById(i).style.display= s === false ? "none":"block";}
+        function extractVideoId(l){const r=/(?:https?:\/\/(?:www\.)?)?youtu(?:\.be\/|be\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]+)/;const m=l.match(r);return m?m[1]:null}
+        function playMedia(il,ifrm,ovl,isVideo){
+            let l = document.getElementById(il).value;
+            let src = l;
+            if (isVideo) {
+                let id = extractVideoId(l);
+                src = id ? "https://www.youtube.com/embed/" + id : null;
+                if (!src) {alert("Invalid YouTube link."); return;}
+            } else if (!l.startsWith("http://") && !l.startsWith("https://")) {
+                src = "https://" + l;
+            }
+            document.getElementById(ifrm).src = src;
+            document.getElementById(ovl).style.display = "block";
+        }
+        function closeMedia(f,o,i){document.getElementById(o).style.display="none";document.getElementById(f).src="";document.getElementById(i).value=""}
+        function showMenu(m){
+            document.querySelectorAll('.menu').forEach(menu => menu.style.display = 'none');
+            document.getElementById(m).style.display = 'flex';
+        }
+        function setTab(t,i){document.title=t;let l=document.querySelector("link[rel*='icon']")||document.createElement('link');l.type='image/x-icon';l.rel='shortcut icon';l.href=i;document.getElementsByTagName('head')[0].appendChild(l)}
+        window.onload=resetTab
+    </script>
 </body>
 </html>
