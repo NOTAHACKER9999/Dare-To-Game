@@ -1,25 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dare to Game 2</title>
-    <style>
-        body {
-            background-color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        h1 {
-            color: red;
-            text-shadow: 0 0 20px red, 0 0 30px red, 0 0 40px red;
-        }
-    </style>
+<title>Dare to Game 2</title>
+<style>
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #222; /* Dark gray background for the whole page */
+    color: white; /* Default text color */
+}
+
+.main-menu, .youtube-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Make sure the menu takes up the full viewport height */
+    background-color: black;
+    color: white;
+}
+
+.glowing-title {
+    font-size: 3em;
+    text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: black;
+    color: red;
+    border: 2px solid red;
+    border-radius: 5px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+    background-color: red;
+    color: black;
+}
+
+.youtube-menu {
+    display: none; /* Initially hidden */
+}
+
+.youtube-title {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.youtube-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+
+.back-button {
+    margin-top: 20px;
+}
+</style>
 </head>
 <body>
-    <h1>Dare to Game 2</h1>
+
+<div class="main-menu" id="mainMenu">
+    <h1 class="glowing-title">Dare to Game 2</h1>
+    <button onclick="goToGames()">Games</button>
+    <button onclick="showYoutubeMenu()">Youtube</button>
+    <button onclick="goToTools()">Tools</button>
+    <button onclick="goToCustomizer()">Customizer</button>
+</div>
+
+<div class="youtube-menu" id="youtubeMenu">
+    <h2 class="youtube-title">Youtube Area</h2>
+    <div class="youtube-button-container">
+        <button onclick="goToYoutubeVid()">Youtube Vid</button>
+        <button onclick="goToYoutubeMusic()">Youtube Music</button>
+    </div>
+    <button class="back-button" onclick="showMainMenu()">Back</button>
+</div>
+
+<script>
+function showYoutubeMenu() {
+    document.getElementById("mainMenu").style.display = "none";
+    document.getElementById("youtubeMenu").style.display = "flex";
+}
+
+function showMainMenu() {
+    document.getElementById("youtubeMenu").style.display = "none";
+    document.getElementById("mainMenu").style.display = "flex";
+}
+
+function goToGames() {
+    alert("Navigating to Games (placeholder)");
+    // Replace with actual navigation logic
+}
+
+function goToYoutubeVid() {
+    alert("Navigating to Youtube Vid (placeholder)");
+    // Replace with actual navigation logic
+}
+
+function goToYoutubeMusic() {
+    alert("Navigating to Youtube Music (placeholder)");
+    // Replace with actual navigation logic
+}
+
+function goToTools() {
+    alert("Navigating to Tools (placeholder)");
+    // Replace with actual navigation logic
+}
+
+function goToCustomizer() {
+    alert("Navigating to Customizer (placeholder)");
+    // Replace with actual navigation logic
+}
+</script>
+
 </body>
 </html>
