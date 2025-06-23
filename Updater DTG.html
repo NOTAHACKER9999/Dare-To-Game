@@ -135,14 +135,14 @@
 </div>
 
 <div class="tab-hiders-menu" id="tabHidersMenu">
-    <h2 class="tab-hiders-title">Tab Hidders</h2>
+    <h2 class="tab-hiders-title">Tab Hiders</h2>
     <div class="tab-hiders-button-container">
         <button onclick="setMasteryConnectTab()">Mastery Connect</button>
-        <button>Clever</button>
-        <button>Google Classroom</button>
-        <button>Chrome Tab</button>
-        <button>Class companion</button>
-        <button>IXL</button>
+        <button onclick="setCleverTab()">Clever</button>
+        <button onclick="setGoogleClassroomTab()">Google Classroom</button>
+        <button onclick="setChromeTab()">Chrome Tab</button>
+        <button onclick="setClassCompanionTab()">Class companion</button>
+        <button onclick="setIXLTab()">IXL</button>
     </div>
     <button class="back-button" onclick="showToolsMenu()">Back</button>
 </div>
@@ -203,11 +203,53 @@ function goToYoutubeMusic() {
 
 function setMasteryConnectTab() {
     document.title = "Mastery Connect :: Home";
-    // Check if a favicon already exists
     let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';
     link.href = 'https://play-lh.googleusercontent.com/xzpb2NiAHpKIPsDAH7LT3pSPKUfKnfI5zmfcNuAwUqV_Cp1zgLr9Qr2DIa2H5nPHa467';
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+
+function setCleverTab() {
+    document.title = "Clever | Portal";
+    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = 'https://resources.finalsite.net/images/f_auto,q_auto/v1689877141/mooreschoolscom/emadd6nvplrnh1vsswjf/Clever-Logo.jpg';
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+
+function setGoogleClassroomTab() {
+    document.title = "Home"; // Or whatever the actual Google Classroom title is
+    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = 'https://www.gstatic.com/classroom/logo_square_rounded.svg';
+    document.getElementsByTagName('head')[0].appendChild(link);
+}
+
+function setChromeTab() {
+    document.title = "New Tab";
+    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = 'https://miro.medium.com/v2/resize:fit:640/format:webp/1*cFJL8VVncsRcUuHCT7n9MA.jpeg';
+}
+
+function setClassCompanionTab() {
+    document.title = "Class Companion"; // Or the actual title
+    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = 'https://classcompanion.us/wp-content/uploads/2022/07/cropped-favicon-32x32.png'; // Replace with actual favicon URL
+}
+
+function setIXLTab() {
+    document.title = "IXL | Math, Language Arts, Science, Social Studies, and Spanish";
+    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = 'https://www.ixl.com/favicon.ico';
     document.getElementsByTagName('head')[0].appendChild(link);
 }
 </script>
