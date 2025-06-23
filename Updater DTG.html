@@ -11,7 +11,7 @@
             color: white;
         }
 
-        .main-menu, .youtube-menu, .games-menu {
+        .main-menu, .youtube-menu, .games-menu, .tools-menu, .tab-hiders-menu {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -45,11 +45,11 @@
             color: black;
         }
 
-        .youtube-menu, .games-menu {
+        .youtube-menu, .games-menu, .tools-menu, .tab-hiders-menu {
             display: none;
         }
 
-        .youtube-title, .games-title {
+        .youtube-title, .games-title, .tools-title, .tab-hiders-title {
             font-size: 4em;
             margin-top: -100px;
             margin-bottom: 50px;
@@ -57,7 +57,7 @@
             color: #cc0000;
         }
 
-        .youtube-button-container, .games-button-container {
+        .youtube-button-container, .games-button-container, .tools-button-container, .tab-hiders-button-container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -71,16 +71,16 @@
             width: 80%;
             height: 200px;
             background-color: #333;
-            overflow-x: auto; /* Enables horizontal scrolling */
-            white-space: nowrap; /* Prevents wrapping of content */
+            overflow-x: auto;
+            white-space: nowrap;
             padding: 10px;
             margin-bottom: 20px;
-            display: flex; /* Use flexbox for horizontal layout */
-            align-items: center; /* Vertically center the content */
+            display: flex;
+            align-items: center;
         }
 
         .gbar button {
-            margin: 0 10px; /* Add some space between buttons in the gbar */
+            margin: 0 10px;
         }
     </style>
 </head>
@@ -90,7 +90,7 @@
     <h1 class="glowing-title">Dare to Game 2</h1>
     <button onclick="showGamesMenu()">Games</button>
     <button onclick="showYoutubeMenu()">Youtube</button>
-    <button onclick="goToTools()">Tools</button>
+    <button onclick="showToolsMenu()">Tools</button>
     <button onclick="goToCustomizer()">Customizer</button>
 </div>
 
@@ -106,7 +106,6 @@
 <div class="games-menu" id="gamesMenu">
     <h2 class="games-title">GAMES</h2>
     <div class="gbar" id="gbar">
-        <!-- Add your game buttons here -->
         <button>Game 1</button>
         <button>Game 2</button>
         <button>Game 3</button>
@@ -117,10 +116,30 @@
         <button>Game 8</button>
         <button>Game 9</button>
         <button>Game 10</button>
-
-
     </div>
     <button class="back-button" onclick="showMainMenu()">Back</button>
+</div>
+
+<div class="tools-menu" id="toolsMenu">
+    <h2 class="tools-title">Tools</h2>
+    <div class="tools-button-container">
+        <button onclick="showTabHidersMenu()">Tab Hidders</button>
+        <button onclick="goToCalculatorFakeTabs()">Calculator Fake Tabs</button>
+    </div>
+    <button class="back-button" onclick="showMainMenu()">Back</button>
+</div>
+
+<div class="tab-hiders-menu" id="tabHidersMenu">
+    <h2 class="tab-hiders-title">Tab Hiders</h2>
+    <div class="tab-hiders-button-container">
+        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://play-lh.googleusercontent.com/xzpb2NiAHpKIPsDAH7LT3pSPKUfKnfI5zmfcNuAwUqV_Cp1zgLr9Qr2DIa2H5nPHa467\"; document.title = \"Mastery Connect :: Home\"; })();')">Mastery Connect</button>
+        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://resources.finalsite.net/images/f_auto,q_auto/v1689877141/mooreschoolscom/emadd6nvplrnh1vsswjf/Clever-Logo.jpg\"; document.title = \"Clever │ Portal\"; })();')">Clever</button>
+        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://www.gstatic.com/classroom/logo_square_rounded.svg\"; document.title = \"Home\"; })();')">Google Classroom</button>
+        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://miro.medium.com/v2/resize:fit:640/format:webp/1*cFJL8VVncsRcUuHCT7n9MA.jpeg\"; document.title = \"New Tab\"; })();')">Chrome Tab</button>
+        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvrr4BZdtke894D6ksEwcRIaUzVzVpsFcGFg&s\"; document.title = \"Dashboard │ Class Companion\"; })();')">Class companion</button>
+        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://img.icons8.com/color/48/ixl.png\"; document.title = \"IXL - Personalized learning\"; })();')">IXL</button>
+    </div>
+    <button class="back-button" onclick="showToolsMenu()">Back</button>
 </div>
 
 <script>
@@ -132,6 +151,8 @@ function showYoutubeMenu() {
 function showMainMenu() {
     document.getElementById("youtubeMenu").style.display = "none";
     document.getElementById("gamesMenu").style.display = "none";
+    document.getElementById("toolsMenu").style.display = "none";
+    document.getElementById("tabHidersMenu").style.display = "none";
     document.getElementById("mainMenu").style.display = "flex";
 }
 
@@ -140,25 +161,41 @@ function showGamesMenu() {
     document.getElementById("gamesMenu").style.display = "flex";
 }
 
-
-function goToYoutubeVid() {
-    alert("Navigating to Youtube Vid (placeholder)");
-    // Replace with actual navigation logic
+function showToolsMenu() {
+    document.getElementById("mainMenu").style.display = "none";
+    document.getElementById("toolsMenu").style.display = "flex";
 }
 
-function goToYoutubeMusic() {
-    alert("Navigating to Youtube Music (placeholder)");
-    // Replace with actual navigation logic
+function showTabHidersMenu() {
+    document.getElementById("toolsMenu").style.display = "none";
+    document.getElementById("tabHidersMenu").style.display = "flex";
 }
 
-function goToTools() {
-    alert("Navigating to Tools (placeholder)");
+function goToCalculatorFakeTabs() {
+    alert("Navigating to Calculator Fake Tabs (placeholder)");
     // Replace with actual navigation logic
 }
 
 function goToCustomizer() {
     alert("Navigating to Customizer (placeholder)");
     // Replace with actual navigation logic
+}
+
+function goToYoutubeVid() {
+    alert("Navigating to Youtube Vid (placeholder)");
+}
+
+function goToYoutubeMusic() {
+    alert("Navigating to Youtube Music (placeholder)");
+}
+
+// Universal function to execute arbitrary JavaScript code
+function runCode(code) {
+    try {
+        eval(code);
+    } catch (e) {
+        alert("Error running code: " + e);
+    }
 }
 </script>
 
