@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Dare to Game 2</title>
-    <link rel="shortcut icon" type="image/x-icon" href="[https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg]">
+    <link rel="shortcut icon" type="image/x-icon" href="https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg">
     <style>
         body {
             font-family: sans-serif;
@@ -144,11 +144,15 @@
         <button onclick="setChromeTab()">Chrome Tab</button>
         <button onclick="setClassCompanionTab()">Class companion</button>
         <button onclick="setIXLTab()">IXL</button>
+        <button onclick="resetTab()">Reset Tab</button>
     </div>
     <button class="back-button" onclick="showToolsMenu()">Back</button>
 </div>
 
 <script>
+const defaultTitle = "Dare to Game 2"; // Store the initial title
+const defaultFavicon = "https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg"; // Store the initial favicon
+
 function showYoutubeMenu() {
     document.getElementById("mainMenu").style.display = "none";
     document.getElementById("youtubeMenu").style.display = "flex";
@@ -251,6 +255,14 @@ function setIXLTab() {
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';
     link.href = 'https://www.ixl.com/favicon.ico';
+}
+
+function resetTab() {
+    document.title = defaultTitle;
+    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = defaultFavicon;
     document.getElementsByTagName('head')[0].appendChild(link);
 }
 </script>
