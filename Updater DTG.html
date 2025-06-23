@@ -19,6 +19,10 @@
             min-height: 100vh;
             background-color: black;
             color: white;
+            position: absolute; /* Important fix: Position menus absolutely */
+            top: 0;
+            left: 0;
+            width: 100%; /* Ensure it covers the full width */
         }
 
         .glowing-title {
@@ -124,20 +128,21 @@
     <h2 class="tools-title">Tools</h2>
     <div class="tools-button-container">
         <button onclick="showTabHidersMenu()">Tab Hidders</button>
-        <button onclick="goToCalculatorFakeTabs()">Calculator Fake Tabs</button>
+        <button onclick="goToCalculator()">Calculator</button>
+        <button onclick="goToFakeTabs()">Fake Tabs</button>
     </div>
     <button class="back-button" onclick="showMainMenu()">Back</button>
 </div>
 
 <div class="tab-hiders-menu" id="tabHidersMenu">
-    <h2 class="tab-hiders-title">Tab Hiders</h2>
+    <h2 class="tab-hiders-title">Tab Hidders</h2>
     <div class="tab-hiders-button-container">
-        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://play-lh.googleusercontent.com/xzpb2NiAHpKIPsDAH7LT3pSPKUfKnfI5zmfcNuAwUqV_Cp1zgLr9Qr2DIa2H5nPHa467\"; document.title = \"Mastery Connect :: Home\"; })();')">Mastery Connect</button>
-        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://resources.finalsite.net/images/f_auto,q_auto/v1689877141/mooreschoolscom/emadd6nvplrnh1vsswjf/Clever-Logo.jpg\"; document.title = \"Clever │ Portal\"; })();')">Clever</button>
-        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://www.gstatic.com/classroom/logo_square_rounded.svg\"; document.title = \"Home\"; })();')">Google Classroom</button>
-        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://miro.medium.com/v2/resize:fit:640/format:webp/1*cFJL8VVncsRcUuHCT7n9MA.jpeg\"; document.title = \"New Tab\"; })();')">Chrome Tab</button>
-        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvrr4BZdtke894D6ksEwcRIaUzVzVpsFcGFg&s\"; document.title = \"Dashboard │ Class Companion\"; })();')">Class companion</button>
-        <button onclick="runCode('javascript:(function() { document.querySelector(\"link[rel*=\'icon\']\").href = \"https://img.icons8.com/color/48/ixl.png\"; document.title = \"IXL - Personalized learning\"; })();')">IXL</button>
+        <button onclick="setMasteryConnectTab()">Mastery Connect</button>
+        <button>Clever</button>
+        <button>Google Classroom</button>
+        <button>Chrome Tab</button>
+        <button>Class companion</button>
+        <button>IXL</button>
     </div>
     <button class="back-button" onclick="showToolsMenu()">Back</button>
 </div>
@@ -162,17 +167,24 @@ function showGamesMenu() {
 }
 
 function showToolsMenu() {
-    document.getElementById("mainMenu").style.display = "none";
-    document.getElementById("toolsMenu").style.display = "flex";
+    document.getElementById("mainMenu").style.display = "none";  // Hide main menu
+    document.getElementById("tabHidersMenu").style.display = "none"; // Ensure tabHiders is hidden
+    document.getElementById("toolsMenu").style.display = "flex";  // Show the tools menu
 }
+
 
 function showTabHidersMenu() {
     document.getElementById("toolsMenu").style.display = "none";
     document.getElementById("tabHidersMenu").style.display = "flex";
 }
 
-function goToCalculatorFakeTabs() {
-    alert("Navigating to Calculator Fake Tabs (placeholder)");
+function goToCalculator() {
+    alert("Navigating to Calculator (placeholder)");
+    // Replace with actual navigation logic
+}
+
+function goToFakeTabs() {
+    alert("Navigating to Fake Tabs (placeholder)");
     // Replace with actual navigation logic
 }
 
@@ -189,13 +201,14 @@ function goToYoutubeMusic() {
     alert("Navigating to Youtube Music (placeholder)");
 }
 
-// Universal function to execute arbitrary JavaScript code
-function runCode(code) {
-    try {
-        eval(code);
-    } catch (e) {
-        alert("Error running code: " + e);
-    }
+function setMasteryConnectTab() {
+    document.title = "Mastery Connect :: Home";
+    // Check if a favicon already exists
+    let link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = 'https://play-lh.googleusercontent.com/xzpb2NiAHpKIPsDAH7LT3pSPKUfKnfI5zmfcNuAwUqV_Cp1zgLr9Qr2DIa2H5nPHa467';
+    document.getElementsByTagName('head')[0].appendChild(link);
 }
 </script>
 
