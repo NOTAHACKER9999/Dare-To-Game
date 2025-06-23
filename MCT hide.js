@@ -1,0 +1,1 @@
+javascript:(function() {     document.querySelector("link[rel*='icon']").href = "https://play-lh.googleusercontent.com/xzpb2NiAHpKIPsDAH7LT3pSPKUfKnfI5zmfcNuAwUqV_Cp1zgLr9Qr2DIa2H5nPHa467";     document.title = "Mastery Connect :: Home"; })();
