@@ -12,7 +12,7 @@
             color: white;
         }
 
-        .main-menu, .youtube-menu, .games-menu, .tools-menu, .tab-hiders-menu {
+        .main-menu, .youtube-menu, .games-menu, .tools-menu, .tab-hiders-menu, .fake-tabs-menu {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -50,11 +50,11 @@
             color: black;
         }
 
-        .youtube-menu, .games-menu, .tools-menu, .tab-hiders-menu {
+        .youtube-menu, .games-menu, .tools-menu, .tab-hiders-menu, .fake-tabs-menu {
             display: none;
         }
 
-        .youtube-title, .games-title, .tools-title, .tab-hiders-title {
+        .youtube-title, .games-title, .tools-title, .tab-hiders-title, .fake-tabs-title {
             font-size: 4em;
             margin-top: -100px;
             margin-bottom: 50px;
@@ -62,7 +62,7 @@
             color: #cc0000;
         }
 
-        .youtube-button-container, .games-button-container, .tools-button-container, .tab-hiders-button-container {
+        .youtube-button-container, .games-button-container, .tools-button-container, .tab-hiders-button-container, .fake-tabs-button-container {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -86,6 +86,40 @@
 
         .gbar button {
             margin: 0 10px;
+        }
+
+        /* Desmos Overlay Styles */
+        #desmosOverlay {
+            display: none; /* Hidden by default */
+            position: fixed; /* Cover the whole screen */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000; /* Ensure it's on top */
+            border: none; /* Remove iframe border */
+        }
+
+        #desmosOverlay iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Close Button Style */
+        #closeOverlay {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: rgba(255, 0, 0, 0.3); /* Faint red */
+            cursor: pointer;
+            z-index: 1001; /* Above the iframe */
+            user-select: none; /* Prevent text selection */
+        }
+
+        #closeOverlay:hover {
+            color: rgba(255, 0, 0, 0.7); /* Slightly brighter on hover */
         }
     </style>
 </head>
@@ -130,7 +164,7 @@
     <div class="tools-button-container">
         <button onclick="showTabHidersMenu()">Tab Hidders</button>
         <button onclick="goToCalculator()">Calculator</button>
-        <button onclick="goToFakeTabs()">Fake Tabs</button>
+        <button onclick="showFakeTabsMenu()">Fake Tabs</button>
     </div>
     <button class="back-button" onclick="showMainMenu()">Back</button>
 </div>
@@ -149,6 +183,19 @@
     <button class="back-button" onclick="showToolsMenu()">Back</button>
 </div>
 
+<div class="fake-tabs-menu" id="fakeTabsMenu">
+    <h2 class="fake-tabs-title">Fake Tabs</h2>
+    <div class="fake-tabs-button-container">
+        <button onclick="applyDesmosOverlay()">Desmos Cover</button>
+    </div>
+    <button class="back-button" onclick="showToolsMenu()">Back</button>
+</div>
+
+<div id="desmosOverlay">
+    <iframe src="https://www.desmos.com/scientific"></iframe>
+    <div id="closeOverlay" onclick="removeDesmosOverlay()">&#x2715;</div>
+</div>
+
 <script>
 const defaultTitle = "Dare to Game 2"; // Store the initial title
 const defaultFavicon = "https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg"; // Store the initial favicon
@@ -163,8 +210,24 @@ function resetTab() {
     document.getElementsByTagName('head')[0].appendChild(link);
 }
 
+// Function to apply Desmos Overlay
+function applyDesmosOverlay() {
+    document.getElementById("desmosOverlay").style.display = "block";
+}
+
+// Function to remove Desmos Overlay
+function removeDesmosOverlay() {
+    document.getElementById("desmosOverlay").style.display = "none";
+}
+
 // Call resetTab() on page load to ensure defaults are applied
 window.onload = resetTab;
+
+// Function to show fake tabs menu
+function showFakeTabsMenu() {
+    document.getElementById("toolsMenu").style.display = "none";
+    document.getElementById("fakeTabsMenu").style.display = "flex";
+}
 
 function showYoutubeMenu() {
     document.getElementById("mainMenu").style.display = "none";
@@ -176,6 +239,7 @@ function showMainMenu() {
     document.getElementById("gamesMenu").style.display = "none";
     document.getElementById("toolsMenu").style.display = "none";
     document.getElementById("tabHidersMenu").style.display = "none";
+    document.getElementById("fakeTabsMenu").style.display = "none";
     document.getElementById("mainMenu").style.display = "flex";
 }
 
@@ -187,12 +251,14 @@ function showGamesMenu() {
 function showToolsMenu() {
     document.getElementById("mainMenu").style.display = "none";  // Hide main menu
     document.getElementById("tabHidersMenu").style.display = "none"; // Ensure tabHiders is hidden
+    document.getElementById("fakeTabsMenu").style.display = "none";
     document.getElementById("toolsMenu").style.display = "flex";  // Show the tools menu
 }
 
 
 function showTabHidersMenu() {
     document.getElementById("toolsMenu").style.display = "none";
+    document.getElementById("fakeTabsMenu").style.display = "none";
     document.getElementById("tabHidersMenu").style.display = "flex";
 }
 
@@ -201,12 +267,7 @@ function goToCalculator() {
     // Replace with actual navigation logic
 }
 
-function goToFakeTabs() {
-    alert("Navigating to Fake Tabs (placeholder)");
-    // Replace with actual navigation logic
-}
-
-function goToCustomizer() {
+function showCustomizer() {
     alert("Navigating to Customizer (placeholder)");
     // Replace with actual navigation logic
 }
@@ -225,7 +286,6 @@ function setMasteryConnectTab() {
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';
     link.href = 'https://play-lh.googleusercontent.com/xzpb2NiAHpKIPsDAH7LT3pSPKUfKnfI5zmfcNuAwUqV_Cp1zgLr9Qr2DIa2H5nPHa467';
-    document.getElementsByTagName('head')[0].appendChild(link);
 }
 
 function setCleverTab() {
@@ -234,7 +294,6 @@ function setCleverTab() {
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';
     link.href = 'https://resources.finalsite.net/images/f_auto,q_auto/v1689877141/mooreschoolscom/emadd6nvplrnh1vsswjf/Clever-Logo.jpg';
-    document.getElementsByTagName('head')[0].appendChild(link);
 }
 
 function setGoogleClassroomTab() {
@@ -243,7 +302,6 @@ function setGoogleClassroomTab() {
     link.type = 'image/x-icon';
     link.rel = 'shortcut icon';
     link.href = 'https://www.gstatic.com/classroom/logo_square_rounded.svg';
-    document.getElementsByTagName('head')[0].appendChild(link);
 }
 
 function setChromeTab() {
@@ -269,8 +327,6 @@ function setIXLTab() {
     link.rel = 'shortcut icon';
     link.href = 'https://www.ixl.com/favicon.ico';
 }
-
-
 </script>
 
 </body>
