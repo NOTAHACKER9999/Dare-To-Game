@@ -20,6 +20,12 @@
         .gbar{width:80%;height:200px;background-color:#333;overflow-x:auto;white-space:nowrap;padding:10px;margin-bottom:20px;display:flex;align-items:center}
         .gbar button{margin:0 10px}
         #desmosOverlay iframe {width: 100%;height: 100%;border: none;}
+
+        /* Status Menus */
+        #statusMenu {display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999;align-items:center;justify-content:center; font-size:5em; color:#000}
+        #statusMenu.downtime {background-color:#888;}
+        #statusMenu.locked {background-color:#000; color:red;text-shadow: 0 0 10px #F00, 0 0 20px #F00, 0 0 30px #F00;}
+        #statusMenu input[type=text] {padding:10px;font-size:.5em;border:1px solid #800;border-radius:5px;background-color:#fff;color:#000;width:60%;margin-top:20px}
     </style>
 </head>
 <body>
@@ -89,6 +95,7 @@
         </div>
         <button onclick="showMenu('mainMenu')">Back</button>
     </div>
+
     <div id="desmosOverlay">
       <iframe src="https://www.desmos.com/scientific"></iframe>
       <div id="closeDesmosOverlay" onclick="showOverlay('desmosOverlay',false)">&#x2715;</div>
@@ -105,12 +112,19 @@
       <span id="closeWebpageOverlay" onclick="closeMedia('webpageFrame','webpageOverlay','webpageLink')">&#x2715;</span>
       <iframe id="webpageFrame" frameborder="0"></iframe>
     </div>
+
+    <div id="statusMenu"></div>
+
     <script>
         const D="Dare to Game 2",F="https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg";
+        let programStatus = 'online';  // Default status
+
         function resetTab(){document.title=D;let l=document.querySelector("link[rel*='icon']")||document.createElement('link');l.type='image/x-icon';l.rel='shortcut icon';l.href=F;document.getElementsByTagName('head')[0].appendChild(l)}
         function showOverlay(i,s){document.getElementById(i).style.display= s === false ? "none":"block";}
         function extractVideoId(l){const r=/(?:https?:\/\/(?:www\.)?)?youtu(?:\.be\/|be\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]+)/;const m=l.match(r);return m?m[1]:null}
+
         function playMedia(il,ifrm,ovl,isVideo){
+            if (programStatus !== 'online') return;
             let l = document.getElementById(il).value;
             let src = l;
             if (isVideo) {
@@ -125,11 +139,57 @@
         }
         function closeMedia(f,o,i){document.getElementById(o).style.display="none";document.getElementById(f).src="";document.getElementById(i).value=""}
         function showMenu(m){
+             if (programStatus !== 'online') return;
             document.querySelectorAll('.menu').forEach(menu => menu.style.display = 'none');
             document.getElementById(m).style.display = 'flex';
         }
-        function setTab(t,i){document.title=t;let l=document.querySelector("link[rel*='icon']")||document.createElement('link');l.type='image/x-icon';l.rel='shortcut icon';l.href=i;document.getElementsByTagName('head')[0].appendChild(l)}
-        window.onload=resetTab
+        function setTab(t,i){ if (programStatus !== 'online') return; document.title=t;let l=document.querySelector("link[rel*='icon']")||document.createElement('link');l.type='image/x-icon';l.rel='shortcut icon';l.href=i;document.getElementsByTagName('head')[0].appendChild(l)}
+
+        function checkProgramStatus() {
+            fetch('https://raw.githubusercontent.com/NOTAHACKER9999/Dare-To-Game/refs/heads/main/Program%20External%20Commands')
+                .then(response => response.text())
+                .then(data => {
+                    const statusMenu = document.getElementById('statusMenu');
+
+                    if (data.includes('Set Status <offline>')) {
+                        programStatus = 'offline';
+                        statusMenu.className = 'downtime';
+                        statusMenu.textContent = 'Sorry DownTime';
+                        statusMenu.style.display = 'flex';
+                    } else if (data.includes('Set Status <LOCK>')) {
+                        programStatus = 'locked';
+                        statusMenu.className = 'locked';
+                        statusMenu.innerHTML = 'SYSTEM LOCKED<input type="text" id="unlockCode" placeholder="Type ADMIN<DEATH CORP>">';
+                        statusMenu.style.display = 'flex';
+
+                        const unlockCodeInput = document.getElementById('unlockCode');
+                        unlockCodeInput.addEventListener('keypress', function(event) {
+                            if (event.key === 'Enter') {
+                                if (unlockCodeInput.value === 'ADMIN<DEATH CORP>') {
+                                    programStatus = 'online';
+                                    statusMenu.style.display = 'none';
+                                    showMenu('mainMenu'); // Show main menu after unlocking
+                                } else {
+                                    alert('Incorrect Code!');
+                                }
+                            }
+                        });
+                    } else {
+                        programStatus = 'online';
+                        showMenu('mainMenu');  // Show main menu if online
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking status:', error);
+                   programStatus = 'online';
+                   showMenu('mainMenu');  // Default to online if there's an error
+                });
+        }
+
+        window.onload = () => {
+            resetTab();
+            checkProgramStatus();
+        };
     </script>
 </body>
 </html>
