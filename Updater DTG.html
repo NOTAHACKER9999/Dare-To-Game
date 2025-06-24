@@ -26,6 +26,10 @@
         #statusMenu.downtime {background-color:#888;}
         #statusMenu.locked {background-color:#000; color:red;text-shadow: 0 0 10px #F00, 0 0 20px #F00, 0 0 30px #F00;}
         #statusMenu input[type=text] {padding:10px;font-size:.5em;border:1px solid #800;border-radius:5px;background-color:#fff;color:#000;width:60%;margin-top:20px}
+
+        /* Seasonal Effects */
+        .falling-leaves {position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none; z-index: 1001;}
+        .snowflake {position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1001}
     </style>
 </head>
 <body>
@@ -117,7 +121,8 @@
 
     <script>
         const D="Dare to Game 2",F="https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg";
-        let programStatus = 'online';  // Default status
+        let programStatus = 'online';
+        let currentSeason = null;
 
         function resetTab(){document.title=D;let l=document.querySelector("link[rel*='icon']")||document.createElement('link');l.type='image/x-icon';l.rel='shortcut icon';l.href=F;document.getElementsByTagName('head')[0].appendChild(l)}
         function showOverlay(i,s){document.getElementById(i).style.display= s === false ? "none":"block";}
@@ -139,7 +144,7 @@
         }
         function closeMedia(f,o,i){document.getElementById(o).style.display="none";document.getElementById(f).src="";document.getElementById(i).value=""}
         function showMenu(m){
-             if (programStatus !== 'online') return;
+            if (programStatus !== 'online') return;
             document.querySelectorAll('.menu').forEach(menu => menu.style.display = 'none');
             document.getElementById(m).style.display = 'flex';
         }
@@ -156,11 +161,13 @@
                         statusMenu.className = 'downtime';
                         statusMenu.textContent = 'Sorry DownTime';
                         statusMenu.style.display = 'flex';
+                        removeSeasonalEffects();
                     } else if (data.includes('Set Status <LOCK>')) {
                         programStatus = 'locked';
                         statusMenu.className = 'locked';
-                        statusMenu.innerHTML = 'SYSTEM LOCKED<input type="text" id="unlockCode" placeholder="Type ADMIN<DEATH CORP>">';
+                        statusMenu.innerHTML = 'SYSTEM LOCKED<input type="text" id="unlockCode" placeholder="">';
                         statusMenu.style.display = 'flex';
+                        removeSeasonalEffects();
 
                         const unlockCodeInput = document.getElementById('unlockCode');
                         unlockCodeInput.addEventListener('keypress', function(event) {
@@ -176,20 +183,97 @@
                         });
                     } else {
                         programStatus = 'online';
-                        showMenu('mainMenu');  // Show main menu if online
+                        showMenu('mainMenu');
+                        //Seasonal Effects
+                        if (data.includes('Season Customize<fall>')) {
+                            currentSeason = 'fall';
+                            applyFallingLeaves();
+                        } else if (data.includes('Season Customize<winter>')) {
+                            currentSeason = 'winter';
+                            applySnowflakes();
+                        } else{
+                           removeSeasonalEffects();
+                        }
                     }
                 })
                 .catch(error => {
                     console.error('Error checking status:', error);
-                   programStatus = 'online';
-                   showMenu('mainMenu');  // Default to online if there's an error
+                    programStatus = 'online';
+                    showMenu('mainMenu');
                 });
+        }
+
+        function applyFallingLeaves() {
+            removeSeasonalEffects();
+            const leafContainer = document.createElement('div');
+            leafContainer.className = 'falling-leaves';
+            leafContainer.id = 'leafContainer';
+            document.body.appendChild(leafContainer);
+
+            for (let i = 0; i < 40; i++) {
+                const leaf = document.createElement('span');
+                leaf.textContent = '🍁';  // Leaf symbol
+                leaf.style.position = 'fixed';
+                leaf.style.fontSize = '2em';
+                leaf.style.color = 'red';
+                leaf.style.textShadow = '0 0 10px #F00';
+                leaf.style.left = Math.random() * 100 + 'vw';
+                leaf.style.top = '0';
+                leaf.style.animation = `fall ${Math.random() * 3 + 3}s linear infinite`;
+                leafContainer.appendChild(leaf);
+            }
+        }
+
+        function applySnowflakes() {
+            removeSeasonalEffects();
+            const snowflakeContainer = document.createElement('div');
+            snowflakeContainer.className = 'snowflake';
+            snowflakeContainer.id = 'snowflakeContainer';
+            document.body.appendChild(snowflakeContainer);
+
+            for (let i = 0; i < 60; i++) {
+                const snowflake = document.createElement('span');
+                snowflake.textContent = '❄️';  // Snowflake symbol
+                snowflake.style.position = 'fixed';
+                snowflake.style.fontSize = '1.5em';
+                snowflake.style.color = 'red';
+                snowflake.style.textShadow = '0 0 10px #F00';
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.top = '0';
+                snowflake.style.animation = `snow ${Math.random() * 3 + 3}s linear infinite`;
+                snowflakeContainer.appendChild(snowflake);
+            }
+        }
+
+        function removeSeasonalEffects() {
+            const leafContainer = document.getElementById('leafContainer');
+            if (leafContainer) {
+                leafContainer.remove();
+            }
+            const snowflakeContainer = document.getElementById('snowflakeContainer');
+            if (snowflakeContainer) {
+                snowflakeContainer.remove();
+            }
+            currentSeason = null;
         }
 
         window.onload = () => {
             resetTab();
             checkProgramStatus();
         };
+
     </script>
+
+    <style>
+       @keyframes fall {
+            0% {transform: translateY(0);}
+            100% {transform: translateY(110vh);}
+        }
+        @keyframes snow {
+            0% {transform: translateY(0);}
+            100% {transform: translateY(110vh);}
+        }
+
+    </style>
 </body>
 </html>
