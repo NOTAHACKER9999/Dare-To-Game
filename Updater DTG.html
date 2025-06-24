@@ -4,60 +4,35 @@
     <title>Dare to Game 2</title>
     <link rel="shortcut icon" type="image/x-icon" href="https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg">
     <style>
-        body{font-family:sans-serif;margin:0;padding:0;background-color:#222;color:#fff}
-        .menu{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background-color:#000;color:#fff;position:absolute;top:0;left:0;width:100%;display:none}
-        .menu#mainMenu{display:flex}
-        .glowing-title{font-size:3em;text-shadow:0 0 10px #800,0 0 20px #800,0 0 30px #800;color:#cc0000;margin-bottom:20px}
-        button{padding:10px 20px;margin:10px;background-color:#000;color:red;border:2px solid red;border-radius:5px;font-size:1.2em;cursor:pointer;transition:background-color .3s,color .3s}
-        button:hover{background-color:red;color:#000}
-        .red-panel{background-color:rgba(255,0,0,.2);padding:20px;border-radius:10px;margin-bottom:20px;text-align:center}
-        .red-panel input[type=text]{padding:10px;font-size:1.2em;border:1px solid #800;border-radius:5px;background-color:#000;color:#fff;width:80%;margin-bottom:10px}
-        #youtubeVideoOverlay,#youtubeMusicOverlay,#webpageOverlay,#desmosOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.8);z-index:1002}
-        #youtubeVideoOverlay iframe,#youtubeMusicOverlay iframe,#webpageOverlay iframe,#desmosOverlay iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;height:80%;border:none}
-        #closeYoutubeOverlay,#closeYoutubeMusicOverlay,#closeWebpageOverlay,#closeDesmosOverlay{position:absolute;top:20px;right:20px;font-size:30px;color:#fff;cursor:pointer;z-index:1003;user-select:none}
-        #closeDesmosOverlay{top:auto;bottom:10px;left:auto;right:10px;font-size:20px;color:rgba(255,0,0,.3)}
-        #closeDesmosOverlay:hover{color:rgba(255,0,0,.7)}
-        .gbar{width:80%;height:200px;background-color:#333;overflow-x:auto;white-space:nowrap;padding:10px;margin-bottom:20px;display:flex;align-items:center}
-        .gbar button{margin:0 10px}
-        #desmosOverlay iframe {width: 100%;height: 100%;border: none;}
-
-        /* Status Menus */
-        #statusMenu {display:none; position:fixed; top:0; left:0; width:100%; height:100%; z-index:9999;align-items:center;justify-content:center; font-size:5em; color:#000}
-        #statusMenu.downtime {background-color:#888;}
-        #statusMenu.locked {background-color:#000; color:red;text-shadow: 0 0 10px #F00, 0 0 20px #F00, 0 0 30px #F00;}
-        #statusMenu input[type=text] {padding:10px;font-size:.5em;border:1px solid #800;border-radius:5px;background-color:#fff;color:#000;width:60%;margin-top:20px}
-
-        /* Seasonal Effects */
-        .falling-leaves {position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none; z-index: 1001;}
-        .snowflake {position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1001}
+        body{font-family:sans-serif;margin:0;padding:0;background-color:#222;color:#fff}.menu{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background-color:#000;color:#fff;position:absolute;top:0;left:0;width:100%;display:none}.menu#mainMenu{display:flex}.glowing-title{font-size:3em;text-shadow:0 0 10px #800,0 0 20px #800,0 0 30px #800;color:#cc0000;margin-bottom:20px}button{padding:10px 20px;margin:10px;background-color:#000;color:red;border:2px solid red;border-radius:5px;font-size:1.2em;cursor:pointer;transition:background-color .3s,color .3s}button:hover{background-color:red;color:#000}.red-panel{background-color:rgba(255,0,0,.2);padding:20px;border-radius:10px;margin-bottom:20px;text-align:center}.red-panel input[type=text]{padding:10px;font-size:1.2em;border:1px solid #800;border-radius:5px;background-color:#000;color:#fff;width:80%;margin-bottom:10px}#youtubeVideoOverlay,#youtubeMusicOverlay,#webpageOverlay,#desmosOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,.8);z-index:1002}#youtubeVideoOverlay iframe,#youtubeMusicOverlay iframe,#webpageOverlay iframe,#desmosOverlay iframe{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;height:80%;border:none}#closeYoutubeOverlay,#closeYoutubeMusicOverlay,#closeWebpageOverlay,#closeDesmosOverlay{position:absolute;top:20px;right:20px;font-size:30px;color:#fff;cursor:pointer;z-index:1003;user-select:none}#closeDesmosOverlay{top:auto;bottom:10px;left:auto;right:10px;font-size:20px;color:rgba(255,0,0,.3)}#closeDesmosOverlay:hover{color:rgba(255,0,0,.7)}.gbar{width:80%;height:200px;background-color:#333;overflow-x:auto;white-space:nowrap;padding:10px;margin-bottom:20px;display:flex;align-items:center}.gbar button{margin:0 10px}#desmosOverlay iframe{width:100%;height:100%;border:none}#statusMenu{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;align-items:center;justify-content:center;font-size:5em;color:#000}#statusMenu.downtime{background-color:#888}#statusMenu.locked{background-color:#000;color:red;text-shadow:0 0 10px #F00,0 0 20px #F00,0 0 30px #F00}#statusMenu input[type=text]{padding:10px;font-size:.5em;border:1px solid #800;border-radius:5px;background-color:#fff;color:#000;width:60%;margin-top:20px}.falling-leaves{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1001}.snowflake{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1001}
     </style>
 </head>
 <body>
     <div class="menu" id="mainMenu">
         <h1 class="glowing-title">Dare to Game 2</h1>
-        <button onclick="showMenu('gamesMenu')">Games</button>
-        <button onclick="showMenu('youtubeMenu')">Youtube</button>
-        <button onclick="showMenu('toolsMenu')">Tools</button>
-        <button onclick="showMenu('webpageOpenerMenu')">Web Page Opener</button>
+        <button onclick="mnu('gamesMenu')">Games</button>
+        <button onclick="mnu('youtubeMenu')">Youtube</button>
+        <button onclick="mnu('toolsMenu')">Tools</button>
+        <button onclick="mnu('webpageOpenerMenu')">Web Page Opener</button>
         <button onclick="alert('Customizer')">Customizer</button>
     </div>
     <div class="menu" id="youtubeMenu">
         <h2 class="glowing-title">Youtube Area</h2>
-        <button onclick="showMenu('youtubeVidMenu')">Youtube Vid</button>
-        <button onclick="showMenu('youtubeMusicMenu')">Youtube Music</button>
-        <button onclick="showMenu('mainMenu')">Back</button>
+        <button onclick="mnu('youtubeVidMenu')">Youtube Vid</button>
+        <button onclick="mnu('youtubeMusicMenu')">Youtube Music</button>
+        <button onclick="mnu('mainMenu')">Back</button>
     </div>
     <div class="menu" id="gamesMenu">
         <h2 class="glowing-title">GAMES</h2>
         <div class="gbar"><button>Game 1</button><button>Game 2</button><button>Game 3</button><button>Game 4</button><button>Game 5</button><button>Game 6</button><button>Game 7</button><button>Game 8</button><button>Game 9</button><button>Game 10</button></div>
-        <button onclick="showMenu('mainMenu')">Back</button>
+        <button onclick="mnu('mainMenu')">Back</button>
     </div>
     <div class="menu" id="toolsMenu">
         <h2 class="glowing-title">Tools</h2>
-        <button onclick="showMenu('tabHidersMenu')">Tab Hidders</button>
+        <button onclick="mnu('tabHidersMenu')">Tab Hidders</button>
         <button onclick="alert('Calculator')">Calculator</button>
-        <button onclick="showMenu('fakeTabsMenu')">Fake Tabs</button>
-        <button onclick="showMenu('mainMenu')">Back</button>
+        <button onclick="mnu('fakeTabsMenu')">Fake Tabs</button>
+        <button onclick="mnu('mainMenu')">Back</button>
     </div>
     <div class="menu" id="tabHidersMenu">
         <h2 class="glowing-title">Tab Hiders</h2>
@@ -68,212 +43,104 @@
         <button onclick="setTab('Class Companion','https://classcompanion.us/wp-content/uploads/2022/07/cropped-favicon-32x32.png')">Class companion</button>
         <button onclick="setTab('IXL | Math, Language Arts, Science, Social Studies, and Spanish','https://www.ixl.com/favicon.ico')">IXL</button>
         <button onclick="resetTab()">Reset Tab</button>
-        <button onclick="showMenu('toolsMenu')">Back</button>
+        <button onclick="mnu('toolsMenu')">Back</button>
     </div>
     <div class="menu" id="fakeTabsMenu">
         <h2 class="glowing-title">Fake Tabs</h2>
-        <button onclick="showOverlay('desmosOverlay')">Desmos Cover</button>
-        <button onclick="showMenu('toolsMenu')">Back</button>
+        <button onclick="shwOvr('desmosOverlay')">Desmos Cover</button>
+        <button onclick="mnu('toolsMenu')">Back</button>
     </div>
      <div class="menu" id="youtubeVidMenu">
         <h2 class="glowing-title">Youtube Video Player</h2>
         <div class="red-panel">
-            <input type="text" id="youtubeLink" placeholder="Enter YouTube Video Link">
-            <button onclick="playMedia('youtubeLink','youtubeFrame','youtubeVideoOverlay',true)">Play Video</button>
+            <input type="text" id="youtubeLink" placeholder="Enter YouTube Video/Playlist Link">
+            <button onclick="plyMda('youtubeLink','youtubeFrame','youtubeVideoOverlay',true)">Play</button>
         </div>
-        <button onclick="showMenu('youtubeMenu')">Back</button>
+        <button onclick="mnu('youtubeMenu')">Back</button>
     </div>
     <div class="menu" id="youtubeMusicMenu">
         <h2 class="glowing-title">Youtube Music Player</h2>
         <div class="red-panel">
-            <input type="text" id="youtubeMusicLink" placeholder="Enter YouTube Music Link">
-            <button onclick="playMedia('youtubeMusicLink','youtubeMusicFrame','youtubeMusicOverlay',true)">Play Music</button>
+            <input type="text" id="youtubeMusicLink" placeholder="Enter YouTube Music/Playlist Link">
+            <button onclick="plyMda('youtubeMusicLink','youtubeMusicFrame','youtubeMusicOverlay',true)">Play Music</button>
         </div>
-        <button onclick="showMenu('youtubeMenu')">Back</button>
+        <button onclick="mnu('youtubeMenu')">Back</button>
     </div>
     <div class="menu" id="webpageOpenerMenu">
         <h2 class="glowing-title">Web Page Opener</h2>
         <div class="red-panel">
             <input type="text" id="webpageLink" placeholder="Enter Web Page Link">
-            <button onclick="playMedia('webpageLink','webpageFrame','webpageOverlay',false)">Open Webpage</button>
+            <button onclick="opnWpg('webpageLink','webpageFrame','webpageOverlay')">Open Webpage</button>
         </div>
-        <button onclick="showMenu('mainMenu')">Back</button>
+        <button onclick="mnu('mainMenu')">Back</button>
     </div>
-
     <div id="desmosOverlay">
       <iframe src="https://www.desmos.com/scientific"></iframe>
-      <div id="closeDesmosOverlay" onclick="showOverlay('desmosOverlay',false)">&#x2715;</div>
+      <div id="closeDesmosOverlay" onclick="shwOvr('desmosOverlay',false)">&#x2715;</div>
     </div>
     <div id="youtubeVideoOverlay">
-      <span id="closeYoutubeOverlay" onclick="closeMedia('youtubeFrame','youtubeVideoOverlay','youtubeLink')">&#x2715;</span>
+      <span id="closeYoutubeOverlay" onclick="clsMda('youtubeFrame','youtubeVideoOverlay','youtubeLink')">&#x2715;</span>
       <iframe id="youtubeFrame" frameborder="0" allowfullscreen></iframe>
     </div>
     <div id="youtubeMusicOverlay">
-      <span id="closeYoutubeMusicOverlay" onclick="closeMedia('youtubeMusicFrame','youtubeMusicOverlay','youtubeMusicLink')">&#x2715;</span>
+      <span id="closeYoutubeMusicOverlay" onclick="clsMda('youtubeMusicFrame','youtubeMusicOverlay','youtubeMusicLink')">&#x2715;</span>
       <iframe id="youtubeMusicFrame" frameborder="0" allowfullscreen></iframe>
     </div>
     <div id="webpageOverlay">
-      <span id="closeWebpageOverlay" onclick="closeMedia('webpageFrame','webpageOverlay','webpageLink')">&#x2715;</span>
+      <span id="closeWebpageOverlay" onclick="clsMda('webpageFrame','webpageOverlay','webpageLink')">&#x2715;</span>
       <iframe id="webpageFrame" frameborder="0"></iframe>
     </div>
-
     <div id="statusMenu"></div>
-
     <script>
         const D="Dare to Game 2",F="https://i.pinimg.com/736x/88/00/5f/88005f7b9247e2dd7a1f8dd8b1034100.jpg";
-        let programStatus = 'online';
-        let currentSeason = null;
-
-        function resetTab(){document.title=D;let l=document.querySelector("link[rel*='icon']")||document.createElement('link');l.type='image/x-icon';l.rel='shortcut icon';l.href=F;document.getElementsByTagName('head')[0].appendChild(l)}
-        function showOverlay(i,s){document.getElementById(i).style.display= s === false ? "none":"block";}
-        function extractVideoId(l){const r=/(?:https?:\/\/(?:www\.)?)?youtu(?:\.be\/|be\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]+)/;const m=l.match(r);return m?m[1]:null}
-
-        function playMedia(il,ifrm,ovl,isVideo){
-            if (programStatus !== 'online') return;
-            let l = document.getElementById(il).value;
-            let src = l;
-            if (isVideo) {
-                let id = extractVideoId(l);
-                src = id ? "https://www.youtube.com/embed/" + id : null;
-                if (!src) {alert("Invalid YouTube link."); return;}
-            } else if (!l.startsWith("http://") && !l.startsWith("https://")) {
-                src = "https://" + l;
+        let PS='online',CS=null;
+        const rstTab=()=>{document.title=D;let l=document.querySelector("link[rel*='icon']")||document.createElement('link');l.type='image/x-icon';l.rel='shortcut icon';l.href=F;document.getElementsByTagName('head')[0].appendChild(l)};
+        const shwOvr=(i,s)=>{document.getElementById(i).style.display= s === false ? "none":"block"};
+        const extVidId=l=>{
+            let id = null;
+            if (l.includes('list=')) {
+                const playlistIdMatch = l.match(/list=([a-zA-Z0-9_-]+)/);
+                if (playlistIdMatch && playlistIdMatch[1]) {
+                    id = `PL${playlistIdMatch[1]}`;
+                }
+            } else {
+                const videoIdMatch = l.match(/(?:https?:\/\/(?:www\.)?)?youtu(?:\.be\/|be\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]+)/);
+                if (videoIdMatch) {
+                    id = videoIdMatch[1];
+                }
             }
-            document.getElementById(ifrm).src = src;
-            document.getElementById(ovl).style.display = "block";
-        }
-        function closeMedia(f,o,i){document.getElementById(o).style.display="none";document.getElementById(f).src="";document.getElementById(i).value=""}
-        function showMenu(m){
-            if (programStatus !== 'online') return;
-            document.querySelectorAll('.menu').forEach(menu => menu.style.display = 'none');
-            document.getElementById(m).style.display = 'flex';
-        }
-        function setTab(t,i){ if (programStatus !== 'online') return; document.title=t;let l=document.querySelector("link[rel*='icon']")||document.createElement('link');l.type='image/x-icon';l.rel='shortcut icon';l.href=i;document.getElementsByTagName('head')[0].appendChild(l)}
-
-        function checkProgramStatus() {
-            fetch('https://raw.githubusercontent.com/NOTAHACKER9999/Dare-To-Game/refs/heads/main/Program%20External%20Commands')
-                .then(response => response.text())
-                .then(data => {
-                    const statusMenu = document.getElementById('statusMenu');
-
-                    if (data.includes('Set Status <offline>')) {
-                        programStatus = 'offline';
-                        statusMenu.className = 'downtime';
-                        statusMenu.textContent = 'Sorry DownTime';
-                        statusMenu.style.display = 'flex';
-                        removeSeasonalEffects();
-                    } else if (data.includes('Set Status <LOCK>')) {
-                        programStatus = 'locked';
-                        statusMenu.className = 'locked';
-                        statusMenu.innerHTML = 'SYSTEM LOCKED<input type="text" id="unlockCode" placeholder="">';
-                        statusMenu.style.display = 'flex';
-                        removeSeasonalEffects();
-
-                        const unlockCodeInput = document.getElementById('unlockCode');
-                        unlockCodeInput.addEventListener('keypress', function(event) {
-                            if (event.key === 'Enter') {
-                                if (unlockCodeInput.value === 'ADMIN<DEATH CORP>') {
-                                    programStatus = 'online';
-                                    statusMenu.style.display = 'none';
-                                    showMenu('mainMenu'); // Show main menu after unlocking
-                                } else {
-                                    alert('Incorrect Code!');
-                                }
-                            }
-                        });
-                    } else {
-                        programStatus = 'online';
-                        showMenu('mainMenu');
-                        //Seasonal Effects
-                        if (data.includes('Season Customize<fall>')) {
-                            currentSeason = 'fall';
-                            applyFallingLeaves();
-                        } else if (data.includes('Season Customize<winter>')) {
-                            currentSeason = 'winter';
-                            applySnowflakes();
-                        } else{
-                           removeSeasonalEffects();
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error('Error checking status:', error);
-                    programStatus = 'online';
-                    showMenu('mainMenu');
-                });
-        }
-
-        function applyFallingLeaves() {
-            removeSeasonalEffects();
-            const leafContainer = document.createElement('div');
-            leafContainer.className = 'falling-leaves';
-            leafContainer.id = 'leafContainer';
-            document.body.appendChild(leafContainer);
-
-            for (let i = 0; i < 40; i++) {
-                const leaf = document.createElement('span');
-                leaf.textContent = '🍁';  // Leaf symbol
-                leaf.style.position = 'fixed';
-                leaf.style.fontSize = '2em';
-                leaf.style.color = 'red';
-                leaf.style.textShadow = '0 0 10px #F00';
-                leaf.style.left = Math.random() * 100 + 'vw';
-                leaf.style.top = '0';
-                leaf.style.animation = `fall ${Math.random() * 3 + 3}s linear infinite`;
-                leafContainer.appendChild(leaf);
-            }
-        }
-
-        function applySnowflakes() {
-            removeSeasonalEffects();
-            const snowflakeContainer = document.createElement('div');
-            snowflakeContainer.className = 'snowflake';
-            snowflakeContainer.id = 'snowflakeContainer';
-            document.body.appendChild(snowflakeContainer);
-
-            for (let i = 0; i < 60; i++) {
-                const snowflake = document.createElement('span');
-                snowflake.textContent = '❄️';  // Snowflake symbol
-                snowflake.style.position = 'fixed';
-                snowflake.style.fontSize = '1.5em';
-                snowflake.style.color = 'red';
-                snowflake.style.textShadow = '0 0 10px #F00';
-                snowflake.style.left = Math.random() * 100 + 'vw';
-                snowflake.style.top = '0';
-                snowflake.style.animation = `snow ${Math.random() * 3 + 3}s linear infinite`;
-                snowflakeContainer.appendChild(snowflake);
-            }
-        }
-
-        function removeSeasonalEffects() {
-            const leafContainer = document.getElementById('leafContainer');
-            if (leafContainer) {
-                leafContainer.remove();
-            }
-            const snowflakeContainer = document.getElementById('snowflakeContainer');
-            if (snowflakeContainer) {
-                snowflakeContainer.remove();
-            }
-            currentSeason = null;
-        }
-
-        window.onload = () => {
-            resetTab();
-            checkProgramStatus();
+            return id;
         };
-
+        const plyMda=(il,ifrm,ovl,isVideo)=>{if(PS!=='online')return;let l=document.getElementById(il).value;let src=l;let id=extVidId(l);
+            if(!id){alert("Invalid YouTube link.");return;}
+            src = l.includes('list=') ? `https://www.youtube.com/embed/videoseries?list=${id.substring(2)}` : `https://www.youtube.com/embed/${id}`;
+            document.getElementById(ifrm).src=src;document.getElementById(ovl).style.display="block"};
+        const clsMda=(f,o,i)=>{document.getElementById(o).style.display="none";document.getElementById(f).src="";if(i)document.getElementById(i).value=""};
+        const mnu=m=>{if(PS!=='online')return;document.querySelectorAll('.menu').forEach(menu=>menu.style.display='none');document.getElementById(m).style.display='flex'};
+        const setTab=(t,i)=>{if(PS!=='online')return;document.title=t;let l=document.querySelector("link[rel*='icon']")||document.createElement('link');l.type='image/x-icon';l.rel='shortcut icon';l.href=i;document.getElementsByTagName('head')[0].appendChild(l)};
+        const chkPS=()=>{
+            fetch('https://raw.githubusercontent.com/NOTAHACKER9999/Dare-To-Game/refs/heads/main/Program%20External%20Commands')
+                .then(r=>r.text()).then(d=>{const sm=document.getElementById('statusMenu');
+                if(d.includes('Set Status <offline>')){PS='offline';sm.className='downtime';sm.textContent='Sorry DownTime';sm.style.display='flex';rmvSE()}
+                else if(d.includes('Set Status <LOCK>')){PS='locked';sm.className='locked';sm.innerHTML='SYSTEM LOCKED<input type="text" id="unlockCode" placeholder="">';sm.style.display='flex';rmvSE();
+                    document.getElementById('unlockCode').addEventListener('keypress',e=>{if(e.key==='Enter'){if(e.target.value==='ADMIN<DEATH CORP>'){PS='online';sm.style.display='none';mnu('mainMenu')}else{alert('Incorrect Code!')}}})}
+                else{PS='online';mnu('mainMenu');if(d.includes('Season Customize<fall>')){CS='fall';aplFL()}else if(d.includes('Season Customize<winter>')){CS='winter';aplSF()}else{rmvSE()}}})
+                .catch(e=>{console.error('Error checking status:',e);PS='online';mnu('mainMenu')})
+        };
+        const aplFL=()=>{rmvSE();const lc=document.createElement('div');lc.className='falling-leaves';lc.id='leafContainer';document.body.appendChild(lc);for(let i=0;i<40;i++){const lf=document.createElement('span');lf.textContent='🍁';lf.style.position='fixed';lf.style.fontSize='2em';lf.style.color='red';lf.style.textShadow='0 0 10px #F00';lf.style.left=Math.random()*100+'vw';lf.style.top='0';lf.style.animation=`fall ${Math.random()*3+3}s linear infinite`;lc.appendChild(lf)}};
+        const aplSF=()=>{rmvSE();const sc=document.createElement('div');sc.className='snowflake';sc.id='snowflakeContainer';document.body.appendChild(sc);for(let i=0;i<60;i++){const sf=document.createElement('span');sf.textContent='❄️';sf.style.position='fixed';sf.style.fontSize='1.5em';sf.style.color='red';sf.style.textShadow='0 0 10px #F00';sf.style.left=Math.random()*100+'vw';sf.style.top='0';sf.style.animation=`snow ${Math.random()*3+3}s linear infinite`;sc.appendChild(sf)}};
+        const rmvSE=()=>{document.getElementById('leafContainer')?.remove();document.getElementById('snowflakeContainer')?.remove();CS=null};
+        const opnWpg = (il, ifrm, ovl) => {
+            if (PS !== 'online') return;
+            let l = document.getElementById(il).value;
+            if (!l.startsWith("http://") && !l.startsWith("https://")) {
+                l = "https://" + l;
+            }
+            document.getElementById(ifrm).src = l;
+            document.getElementById(ovl).style.display = "block";
+        };
+        window.onload=()=>{rstTab();chkPS()};
     </script>
-
-    <style>
-       @keyframes fall {
-            0% {transform: translateY(0);}
-            100% {transform: translateY(110vh);}
-        }
-        @keyframes snow {
-            0% {transform: translateY(0);}
-            100% {transform: translateY(110vh);}
-        }
-
-    </style>
+    <style>@keyframes fall{0%{transform:translateY(0)}100%{transform:translateY(110vh)}}@keyframes snow{0%{transform:translateY(0)}100%{transform:translateY(110vh)}}</style>
 </body>
 </html>
