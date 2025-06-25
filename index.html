@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+		<link rel="stylesheet" href="app.css" type="text/css" />
+
+<title>Dare to Game Menu</title>
+<style>
+body {
+  background-color: black;
+  font-family: sans-serif;
+  color: white;
+  text-align: center;
+}
+
+#menu-container {
+  margin-top: 50px;
+}
+
+#watch-listen-menu,
+#game-menu,
+#youtube-runner-menu,
+#mp4-runner-menu,
+#mp3-runner-menu {
+  display: none; /* Initially hidden */
+  margin-top: 50px;
+}
+
+#dare-to-game-title {
+  font-size: 3em;
+  color: #ff0000;
+  text-shadow: 0 0 10px #ff0000;
+  margin-bottom: 20px;
+}
+
+.menu-button, .submenu-button, .runner-button, .game-button {
+  background-color: black;
+  border: 2px solid #ff0000;
+  color: white;
+  padding: 10px 20px;
+  margin: 10px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.menu-button:hover, .submenu-button:hover, .runner-button:hover, .game-button:hover {
+  background-color: #ff0000;
+  color: black;
+}
+.game-button{
+    display: block;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.overlay {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+  z-index: 1000; /* Ensure it's on top */
+}
+
+.overlay-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: black;
+  padding: 20px;
+  border: 2px solid #ff0000;
+  color: white;
+  width: 80%;
+  max-width: 800px;
+  text-align: left;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: white;
+}
+
+input[type="file"] {
+    background-color: black;
+    color: white;
+    border: 1px solid #ff0000;
+    padding: 5px;
+    cursor: pointer;
+}
+input[type="file"]::file-selector-button {
+  background-color: #ff0000;
+  color: black;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+
+<div id="menu-container">
+  <h1 id="dare-to-game-title">DARE TO GAME</h1>
+  <a href="#" class="menu-button" id="watch-listen-button">Watch/Listen</a>
+  <a href="#" class="menu-button" id="game-button">Game</a>
+</div>
+
+<div id="watch-listen-menu">
+  <h2>Watch/Listen Options</h2>
+  <a href="#" class="submenu-button" id="youtube-runner-button">Youtube Link Runner</a>
+  <a href="#" class="submenu-button" id="mp4-runner-button">Mp4 Runner</a>
+  <a href="#" class="submenu-button" id="mp3-runner-button">Mp3 Runner</a>
+  <a href="#" class="submenu-button" id="watch-listen-back-button">Back</a>
+</div>
+
+<!-- YouTube Runner Menu -->
+<div id="youtube-runner-menu">
+    <h2>Youtube Link Runner</h2>
+    <label for="youtube-link">Youtube Link:</label>
+    <input type="text" id="youtube-link" name="youtube-link" /><br><br>
+    <button class="runner-button" id="run-youtube-button">Run Youtube Link</button>
+    <a href="#" class="submenu-button" id="youtube-runner-back-button">Back</a>
+</div>
+
+<!-- MP4 Runner Menu -->
+<div id="mp4-runner-menu">
+  <h2>MP4 Runner</h2>
+  <input type="file" id="mp4-file" accept=".mp4">
+  <button class="runner-button" id="run-mp4-button">Run MP4</button>
+  <a href="#" class="submenu-button" id="mp4-runner-back-button">Back</a>
+</div>
+
+<!-- MP3 Runner Menu -->
+<div id="mp3-runner-menu">
+  <h2>MP3 Runner</h2>
+  <input type="file" id="mp3-file" accept=".mp3">
+  <button class="runner-button" id="run-mp3-button">Run MP3</button>
+  <a href="#" class="submenu-button" id="mp3-runner-back-button">Back</a>
+</div>
+
+<div id="game-menu">
+  <h2>Game Links</h2>
+  <a href="https://gimkit.com" class="game-button" target="_blank">Gimkit</a>
+  <a href="https://blooket.com" class="game-button" target="_blank">Blooket</a>
+  <a href="https://kahoot.com" class="game-button" target="_blank">Kahoot</a>
+  <a href="https://infinite-craft.org" class="game-button" target="_blank">Infinite Craft</a>
+  <a href="https://prodigygame.com" class="game-button" target="_blank">Prodigy</a>
+  <a href="https://sites.google.com/view/classroom6x" class="game-button" target="_blank">Classroom 6x</a>
+  <br>
+  <a href="#" class="submenu-button" id="game-back-button">Back</a>
+</div>
+
+<!-- Overlays -->
+<div id="youtube-overlay" class="overlay">
+  <div class="overlay-content">
+    <span class="close-button" id="youtube-close-button">&times;</span>
+    <h3>Youtube Player</h3>
+    <div id="youtube-player"></div> <!--YouTube player will be loaded here-->
+  </div>
+</div>
+
+<div id="mp4-overlay" class="overlay">
+  <div class="overlay-content">
+    <span class="close-button" id="mp4-close-button">&times;</span>
+    <h3>MP4 Player</h3>
+    <video id="mp4-player" width="640" height="360" controls></video>
+  </div>
+</div>
+
+<div id="mp3-overlay" class="overlay">
+  <div class="overlay-content">
+    <span class="close-button" id="mp3-close-button">&times;</span>
+    <h3>MP3 Player</h3>
+    <audio id="mp3-player" controls></audio>
+  </div>
+</div>
+
+<script>
+  // Get menu elements
+  const menuContainer = document.getElementById('menu-container');
+  const watchListenButton = document.getElementById('watch-listen-button');
+  const gameButton = document.getElementById('game-button');
+  const gameMenu = document.getElementById('game-menu');
+  const gameBackButton = document.getElementById('game-back-button');
+
+  // Get runner menu elements
+  const youtubeRunnerButton = document.getElementById('youtube-runner-button');
+  const mp4RunnerButton = document.getElementById('mp4-runner-button');
+  const mp3RunnerButton = document.getElementById('mp3-runner-button');
+
+  // Get runner menu pages
+  const youtubeRunnerMenu = document.getElementById('youtube-runner-menu');
+  const mp4RunnerMenu = document.getElementById('mp4-runner-menu');
+  const mp3RunnerMenu = document.getElementById('mp3-runner-menu');
+
+  const youtubeRunnerBackButton = document.getElementById('youtube-runner-back-button');
+  const mp4RunnerBackButton = document.getElementById('mp4-runner-back-button');
+  const mp3RunnerBackButton = document.getElementById('mp3-runner-back-button');
+
+  // Watch Listen Menu
+  const watchListenMenu = document.getElementById('watch-listen-menu');
+  const watchListenBackButton = document.getElementById('watch-listen-back-button');
+
+  // Overlay elements
+  let youtubeOverlay = document.getElementById('youtube-overlay');
+  let mp4Overlay = document.getElementById('mp4-overlay');
+  let mp3Overlay = document.getElementById('mp3-overlay');
+
+  let youtubeCloseButton = document.getElementById('youtube-close-button');
+  let mp4CloseButton = document.getElementById('mp4-close-button');
+  let mp3CloseButton = document.getElementById('mp3-close-button');
+
+  const runYoutubeButton = document.getElementById('run-youtube-button');
+  const runMp4Button = document.getElementById('run-mp4-button');
+  const runMp3Button = document.getElementById('run-mp3-button');
+
+  const youtubeLinkInput = document.getElementById('youtube-link');
+  const mp4FileSelector = document.getElementById('mp4-file');
+  const mp3FileSelector = document.getElementById('mp3-file');
+
+  const mp4Player = document.getElementById("mp4-player");
+  const mp3Player = document.getElementById("mp3-player");
+
+  // YouTube API variables
+  let youtubePlayer;
+  let youtubeVideoId;
+
+  // ----------------------------
+  //  MENU NAVIGATION
+  // ----------------------------
+
+  // Main Menu -> Watch/Listen Menu
+  watchListenButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    menuContainer.style.display = 'none';
+    watchListenMenu.style.display = 'block';
+    gameMenu.style.display = 'none'; // Ensure other menus are hidden
+
+  });
+
+  // Main Menu -> Game Menu
+  gameButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    menuContainer.style.display = 'none';
+    gameMenu.style.display = 'block';
+    watchListenMenu.style.display = 'none';// Ensure other menus are hidden
+  });
+
+  // Game Menu -> Main Menu
+  gameBackButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    gameMenu.style.display = 'none';
+    menuContainer.style.display = 'block';
+  });
+
+  // Watch/Listen Menu -> Main Menu
+  watchListenBackButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    watchListenMenu.style.display = 'none';
+    menuContainer.style.display = 'block';
+  });
+
+  // ----------------------------
+  //  RUNNER MENU NAVIGATION
+  // ----------------------------
+
+  // Watch/Listen Menu -> YouTube Runner Menu
+  youtubeRunnerButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    watchListenMenu.style.display = 'none';
+    youtubeRunnerMenu.style.display = 'block';
+  });
+
+  // Watch/Listen Menu -> MP4 Runner Menu
+  mp4RunnerButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    watchListenMenu.style.display = 'none';
+    mp4RunnerMenu.style.display = 'block';
+  });
+
+  // Watch/Listen Menu -> MP3 Runner Menu
+  mp3RunnerButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    watchListenMenu.style.display = 'none';
+    mp3RunnerMenu.style.display = 'block';
+  });
+
+  // YouTube Runner Menu -> Watch/Listen Menu
+  youtubeRunnerBackButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    youtubeRunnerMenu.style.display = 'none';
+    watchListenMenu.style.display = 'block';
+  });
+
+  // MP4 Runner Menu -> Watch/Listen Menu
+  mp4RunnerBackButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    mp4RunnerMenu.style.display = 'none';
+    watchListenMenu.style.display = 'block';
+  });
+
+  // MP3 Runner Menu -> Watch/Listen Menu
+  mp3RunnerBackButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    mp3RunnerMenu.style.display = 'none';
+    watchListenMenu.style.display = 'block';
+  });
+
+  // ----------------------------
+  //  RUNNER EVENTS (FILE LOADING/PLAYBACK)
+  // ----------------------------
+
+  const youtubePlayerContainer = document.getElementById("youtube-player")
+
+    youtubeCloseButton = document.getElementById('youtube-close-button');
+    mp4CloseButton = document.getElementById('mp4-close-button');
+    mp3CloseButton = document.getElementById('mp3-close-button');
+
+  runYoutubeButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    const youtubeLink = youtubeLinkInput.value;
+    if (youtubeLink) {
+      // Extract Video ID
+      youtubeVideoId = extractVideoId(youtubeLink);
+
+      if (youtubeVideoId) {
+        loadYouTubePlayer(youtubeVideoId);
+        youtubeOverlay.style.display = "block";
+      } else {
+        alert("Invalid Youtube Link. Please provide a valid YouTube link.")
+      }
+    }
+  })
+
+  runMp4Button.addEventListener("click", function(event) {
+    event.preventDefault();
+
+    const file = mp4FileSelector.files[0];
+    if (file) {
+      const fileURL = URL.createObjectURL(file);
+      mp4Player.src = fileURL;
+      mp4Overlay.style.display = "block";
+    }
+  })
+
+  runMp3Button.addEventListener("click", function(event) {
+    event.preventDefault();
+    const file = mp3FileSelector.files[0];
+    if (file) {
+      const fileURL = URL.createObjectURL(file);
+      mp3Player.src = fileURL;
+      mp3Overlay.style.display = "block";
+    }
+  })
+
+  // Overlay Close Events
+  youtubeCloseButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    youtubeOverlay.style.display = "none";
+    if (youtubePlayer) {
+      youtubePlayer.stopVideo(); // Stops the video if the player is initialized
+    }
+  })
+
+  mp4CloseButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    mp4Overlay.style.display = "none";
+    mp4Player.pause()
+  })
+
+  mp3CloseButton.addEventListener("click", function(event) {
+    event.preventDefault();
+    mp3Overlay.style.display = "none";
+    mp3Player.pause()
+  })
+
+  //Load Youtube API
+  function loadYouTubeAPI() {
+    const tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+  }
+
+  // Extract Youtube Video ID
+  function extractVideoId(url) {
+    const regex = /[?&]v=([^&#]+)/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  }
+
+  // Function to load the YouTube player
+  function loadYouTubePlayer(videoId) {
+    // Check if the API is loaded and the player is initialized.
+    if (typeof YT == 'undefined' || typeof YT.Player == 'undefined') {
+      window.onYouTubeIframeAPIReady = function() {
+        initializeYouTubePlayer(videoId)
+      }
+
+    } else {
+      initializeYouTubePlayer(videoId)
+    }
+
+
+  }
+
+  function initializeYouTubePlayer(videoId) {
+    youtubePlayer = new YT.Player('youtube-player', {
+      height: '360',
+      width: '640',
+      videoId: videoId,
+      events: {
+        'onReady': onPlayerReady,
+        'onStateChange': onPlayerStateChange
+      }
+    });
+  }
+
+  function onPlayerReady(event) {
+    event.target.playVideo();
+  }
+
+  function onPlayerStateChange(event) {
+    // Handle state changes if needed
+  }
+
+  loadYouTubeAPI();
+</script>
+
+</body>
+</html>
